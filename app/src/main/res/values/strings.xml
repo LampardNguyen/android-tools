@@ -1,0 +1,96 @@
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Battery Alert</string>
+    <string name="app_title">Battery Alert</string>
+    <string name="app_subtitle">Bảo vệ pin điện thoại của bạn</string>
+
+    <!-- Main Activity -->
+    <string name="enable_monitoring">Bật thông báo pin</string>
+    <string name="battery_threshold_title">Ngưỡng thông báo pin</string>
+    <string name="battery_threshold_description">Chọn mức pin để nhận thông báo khi sạc</string>
+    <string name="threshold_label">Ngưỡng:</string>
+    <string name="battery_status_title">Trạng thái pin</string>
+    <string name="current_battery_level">Mức pin hiện tại:</string>
+    <string name="charging_status">Trạng thái sạc:</string>
+    <string name="actions_title">Hành động</string>
+    <string name="test_notification">Thử nghiệm thông báo</string>
+    <string name="settings">Cài đặt</string>
+
+    <!-- Battery Status -->
+    <string name="charging">Đang sạc</string>
+    <string name="not_charging">Không sạc</string>
+    <string name="battery_full">Pin đầy</string>
+    <string name="unknown_status">Không xác định</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">Cài đặt</string>
+    <string name="notification_settings">Cài đặt thông báo</string>
+    <string name="select_ringtone">Chọn nhạc chuông</string>
+    <string name="ringtone_volume">Âm lượng thông báo</string>
+    <string name="enable_vibration">Bật rung khi thông báo</string>
+    <string name="repeat_interval">Khoảng thời gian lặp lại (giây)</string>
+    <string name="general_settings">Cài đặt chung</string>
+    <string name="reset_settings">Khôi phục cài đặt mặc định</string>
+    <string name="about">Thông tin ứng dụng</string>
+
+    <!-- Notifications -->
+    <string name="battery_alert_title">Cảnh báo pin!</string>
+    <string name="battery_alert_message">Pin đã đạt %1$d%%. Hãy ngừng sạc để bảo vệ pin.</string>
+    <string name="service_notification_title">Đang theo dõi pin</string>
+    <string name="service_notification_message">Ứng dụng đang giám sát mức pin của bạn</string>
+    <string name="dismiss">Tắt</string>
+    <string name="snooze">Báo lại sau</string>
+
+    <!-- Permissions -->
+    <string name="permission_notification_title">Cần quyền thông báo</string>
+    <string name="permission_notification_message">Ứng dụng cần quyền thông báo để cảnh báo khi pin đạt ngưỡng.</string>
+    <string name="permission_battery_optimization_title">Tối ưu hóa pin</string>
+    <string name="permission_battery_optimization_message">Để ứng dụng hoạt động tốt nhất, hãy tắt tối ưu hóa pin cho ứng dụng này.</string>
+    <string name="grant_permission">Cấp quyền</string>
+    <string name="cancel">Hủy</string>
+
+    <!-- Validation Messages -->
+    <string name="invalid_threshold" formatted="false">Ngưỡng không hợp lệ. Vui lòng chọn từ 0% đến 100%.</string>
+    <string name="invalid_volume" formatted="false">Âm lượng không hợp lệ. Vui lòng chọn từ 0 đến 100.</string>
+    <string name="invalid_interval" formatted="false">Khoảng thời gian không hợp lệ. Vui lòng chọn từ 5 đến 300 giây.</string>
+
+    <!-- Error Messages -->
+    <string name="error_service_start">Không thể khởi động dịch vụ theo dõi pin.</string>
+    <string name="error_permission_denied">Quyền bị từ chối. Một số tính năng có thể không hoạt động.</string>
+    <string name="error_ringtone_not_found">Không tìm thấy nhạc chuông đã chọn.</string>
+
+    <!-- Success Messages -->
+    <string name="settings_saved">Cài đặt đã được lưu</string>
+    <string name="monitoring_enabled">Đã bật theo dõi pin</string>
+    <string name="monitoring_disabled">Đã tắt theo dõi pin</string>
+    <string name="test_notification_sent">Đã gửi thông báo thử nghiệm</string>
+
+    <!-- Dialog Messages -->
+    <string name="confirm_reset_title">Khôi phục cài đặt</string>
+    <string name="confirm_reset_message">Bạn có chắc muốn khôi phục tất cả cài đặt về mặc định không?</string>
+    <string name="confirm">Xác nhận</string>
+
+    <!-- About -->
+    <string name="version">Phiên bản</string>
+    <string name="developer">Phát triển bởi</string>
+    <string name="app_description">Ứng dụng giúp bảo vệ pin điện thoại bằng cách thông báo khi pin đạt ngưỡng mong muốn.</string>
+
+    <!-- Charging Types -->
+    <string name="charging_ac">Sạc AC</string>
+    <string name="charging_usb">Sạc USB</string>
+    <string name="charging_wireless">Sạc không dây</string>
+    
+    <!-- Additional Action Strings -->
+    <string name="snooze_minutes">Báo lại sau %1$d phút</string>
+    <string name="notification_snoozed">Đã báo lại sau 5 phút</string>
+    
+    <!-- Permission System -->
+    <string name="permission_required_title">Quyền cần thiết</string>
+    <string name="permission_required_message">Ứng dụng cần các quyền sau để hoạt động đúng cách: %s</string>
+    <string name="permission_denied_title">Quyền bị từ chối</string>
+    <string name="permission_denied_warning">Ứng dụng có thể không hoạt động đúng cách nếu thiếu quyền cần thiết</string>
+    <string name="permission_granted">Quyền đã được cấp</string>
+    <string name="grant_permissions">Cấp quyền</string>
+    <string name="battery_optimization_disabled">Tối ưu hóa pin đã được tắt cho ứng dụng</string>
+    <string name="battery_optimization_warning">Vui lòng tắt tối ưu hóa pin để ứng dụng hoạt động tốt nhất</string>
+</resources>

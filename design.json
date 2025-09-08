@@ -1,0 +1,505 @@
+{
+    "designSystem": {
+        "name": "Quickpay Design System",
+        "version": "1.0.0",
+        "brand": {
+            "primaryName": "Quickpay",
+            "tagline": "for your cash, cards, investments, savings and foreign exchanges"
+        },
+        "colors": {
+            "brand": {
+                "primary": "#108EE9",
+                "primaryDark": "#1677FF",
+                "accent1": "#FD9A16",
+                "accent2": "#EA4E0D",
+                "warning": "#FDD504",
+                "error": "#F95654"
+            },
+            "base": {
+                "white": "#FFFFFF",
+                "black": "#242424",
+                "gray": {
+                    "50": "#F5F7FA",
+                    "100": "#E8EBF0",
+                    "200": "#D1D5DB",
+                    "300": "#9CA3AF",
+                    "400": "#6B7280",
+                    "500": "#4B5563",
+                    "600": "#374151",
+                    "700": "#1F2937",
+                    "800": "#111827"
+                }
+            },
+            "semantic": {
+                "background": {
+                    "primary": "#FFFFFF",
+                    "secondary": "#F5F7FA",
+                    "tertiary": "#E8EBF0"
+                },
+                "text": {
+                    "primary": "#242424",
+                    "secondary": "#6B7280",
+                    "tertiary": "#9CA3AF",
+                    "inverse": "#FFFFFF",
+                    "link": "#108EE9"
+                },
+                "success": "#10B981",
+                "info": "#108EE9",
+                "warning": "#FDD504",
+                "error": "#F95654"
+            }
+        },
+        "typography": {
+            "fontFamily": {
+                "primary": "Plus Jakarta Sans",
+                "fallback": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            },
+            "weights": {
+                "regular": 400,
+                "medium": 500,
+                "semibold": 600,
+                "extrabold": 800
+            },
+            "sizes": {
+                "xs": "12px",
+                "sm": "14px",
+                "base": "16px",
+                "lg": "18px",
+                "xl": "20px",
+                "2xl": "24px",
+                "3xl": "30px",
+                "4xl": "36px"
+            },
+            "lineHeight": {
+                "tight": 1.2,
+                "normal": 1.5,
+                "relaxed": 1.75
+            }
+        },
+        "elementStyling": {
+            "statusBar": {
+                "background": "transparent",
+                "icons": "#242424",
+                "height": "44px"
+            },
+            "navigationHeader": {
+                "background": "linear-gradient(180deg, #108EE9 0%, #4DA3F4 100%)",
+                "height": "56px",
+                "title": {
+                    "color": "#FFFFFF",
+                    "fontSize": "18px",
+                    "fontWeight": 600,
+                    "textAlign": "center"
+                },
+                "backButton": {
+                    "color": "#FFFFFF",
+                    "size": "24px"
+                },
+                "actionButtons": {
+                    "color": "#FFFFFF",
+                    "size": "24px"
+                }
+            },
+            "tabNavigation": {
+                "container": {
+                    "background": "#108EE9",
+                    "borderBottom": "none",
+                    "padding": "0 16px"
+                },
+                "tab": {
+                    "default": {
+                        "color": "rgba(255, 255, 255, 0.7)",
+                        "fontSize": "14px",
+                        "fontWeight": 500,
+                        "padding": "12px 16px",
+                        "borderBottom": "2px solid transparent"
+                    },
+                    "active": {
+                        "color": "#FFFFFF",
+                        "borderBottom": "2px solid #FFFFFF",
+                        "fontWeight": 600
+                    },
+                    "hover": {
+                        "color": "rgba(255, 255, 255, 0.9)"
+                    }
+                }
+            },
+            "cards": {
+                "container": {
+                    "background": "#FFFFFF",
+                    "borderRadius": "12px",
+                    "padding": "16px",
+                    "margin": "8px 16px",
+                    "shadow": "0 2px 8px rgba(0, 0, 0, 0.08)",
+                    "border": "none"
+                },
+                "header": {
+                    "display": "flex",
+                    "alignItems": "center",
+                    "marginBottom": "12px"
+                },
+                "icon": {
+                    "container": {
+                        "background": "none",
+                        "size": "24px",
+                        "color": "#108EE9",
+                        "marginRight": "12px"
+                    },
+                    "DO_NOT": "Apply gradients to icons inside cards"
+                },
+                "title": {
+                    "color": "#242424",
+                    "fontSize": "16px",
+                    "fontWeight": 600
+                },
+                "content": {
+                    "color": "#6B7280",
+                    "fontSize": "14px",
+                    "lineHeight": 1.5
+                },
+                "action": {
+                    "color": "#108EE9",
+                    "fontSize": "14px",
+                    "fontWeight": 500,
+                    "textAlign": "right"
+                }
+            },
+            "buttons": {
+                "primary": {
+                    "default": {
+                        "background": "#108EE9",
+                        "color": "#FFFFFF",
+                        "borderRadius": "12px",
+                        "padding": "16px 24px",
+                        "fontSize": "16px",
+                        "fontWeight": 600,
+                        "width": "100%",
+                        "border": "none",
+                        "shadow": "0 2px 4px rgba(16, 142, 233, 0.2)"
+                    },
+                    "hover": {
+                        "background": "#1677FF",
+                        "shadow": "0 4px 8px rgba(16, 142, 233, 0.3)"
+                    },
+                    "active": {
+                        "background": "#0860CC",
+                        "transform": "scale(0.98)"
+                    },
+                    "disabled": {
+                        "background": "#D1D5DB",
+                        "color": "#9CA3AF",
+                        "cursor": "not-allowed"
+                    }
+                },
+                "secondary": {
+                    "default": {
+                        "background": "#FFFFFF",
+                        "color": "#108EE9",
+                        "borderRadius": "12px",
+                        "padding": "16px 24px",
+                        "fontSize": "16px",
+                        "fontWeight": 600,
+                        "border": "2px solid #108EE9"
+                    },
+                    "hover": {
+                        "background": "#F0F9FF",
+                        "borderColor": "#1677FF"
+                    }
+                },
+                "tertiary": {
+                    "default": {
+                        "background": "transparent",
+                        "color": "#108EE9",
+                        "fontSize": "14px",
+                        "fontWeight": 500,
+                        "padding": "8px 12px"
+                    },
+                    "hover": {
+                        "background": "rgba(16, 142, 233, 0.08)"
+                    }
+                },
+                "social": {
+                    "google": {
+                        "background": "#EA4335",
+                        "color": "#FFFFFF",
+                        "borderRadius": "12px",
+                        "padding": "16px 24px",
+                        "width": "100%"
+                    },
+                    "apple": {
+                        "background": "#000000",
+                        "color": "#FFFFFF",
+                        "borderRadius": "12px",
+                        "padding": "16px 24px",
+                        "width": "100%"
+                    }
+                },
+                "DO_NOT": "Apply card shadows to buttons or gradients to button text"
+            },
+            "inputFields": {
+                "container": {
+                    "marginBottom": "16px"
+                },
+                "label": {
+                    "color": "#6B7280",
+                    "fontSize": "14px",
+                    "fontWeight": 500,
+                    "marginBottom": "8px"
+                },
+                "input": {
+                    "default": {
+                        "background": "#F5F7FA",
+                        "border": "1px solid #E8EBF0",
+                        "borderRadius": "8px",
+                        "padding": "12px 16px",
+                        "fontSize": "16px",
+                        "color": "#242424",
+                        "width": "100%"
+                    },
+                    "focus": {
+                        "borderColor": "#108EE9",
+                        "outline": "none",
+                        "background": "#FFFFFF",
+                        "boxShadow": "0 0 0 3px rgba(16, 142, 233, 0.1)"
+                    },
+                    "error": {
+                        "borderColor": "#F95654",
+                        "background": "#FFF5F5"
+                    },
+                    "disabled": {
+                        "background": "#E8EBF0",
+                        "color": "#9CA3AF",
+                        "cursor": "not-allowed"
+                    }
+                },
+                "placeholder": {
+                    "color": "#9CA3AF"
+                },
+                "helperText": {
+                    "color": "#6B7280",
+                    "fontSize": "12px",
+                    "marginTop": "4px"
+                },
+                "errorText": {
+                    "color": "#F95654",
+                    "fontSize": "12px",
+                    "marginTop": "4px"
+                }
+            },
+            "illustrations": {
+                "container": {
+                    "background": "transparent",
+                    "padding": "24px",
+                    "display": "flex",
+                    "justifyContent": "center",
+                    "alignItems": "center"
+                },
+                "style": "flat-geometric",
+                "colors": {
+                    "primary": "#108EE9",
+                    "secondary": "#1677FF",
+                    "accent": [
+                        "#FD9A16",
+                        "#EA4E0D",
+                        "#FDD504"
+                    ],
+                    "figures": {
+                        "skin": "#FFD4B2",
+                        "clothing": [
+                            "#108EE9",
+                            "#10B981",
+                            "#1677FF"
+                        ],
+                        "hair": "#242424"
+                    }
+                },
+                "elements": {
+                    "shapes": [
+                        "circles",
+                        "leaves",
+                        "geometric-forms"
+                    ],
+                    "animation": "subtle-float"
+                },
+                "DO_NOT": "Use realistic imagery or photographic elements"
+            },
+            "successStates": {
+                "icon": {
+                    "background": "#E6F7FF",
+                    "color": "#108EE9",
+                    "size": "80px",
+                    "borderRadius": "50%",
+                    "padding": "20px"
+                },
+                "title": {
+                    "color": "#242424",
+                    "fontSize": "24px",
+                    "fontWeight": 600,
+                    "marginTop": "24px",
+                    "marginBottom": "8px"
+                },
+                "message": {
+                    "color": "#6B7280",
+                    "fontSize": "16px",
+                    "textAlign": "center",
+                    "lineHeight": 1.5
+                }
+            },
+            "dataVisualization": {
+                "charts": {
+                    "background": "#FFFFFF",
+                    "gridLines": "#E8EBF0",
+                    "axis": {
+                        "color": "#6B7280",
+                        "fontSize": "12px"
+                    },
+                    "data": {
+                        "primary": "#108EE9",
+                        "secondary": "#1677FF",
+                        "gradient": "linear-gradient(180deg, #108EE9 0%, rgba(16, 142, 233, 0.1) 100%)"
+                    }
+                },
+                "metrics": {
+                    "value": {
+                        "color": "#242424",
+                        "fontSize": "32px",
+                        "fontWeight": 800
+                    },
+                    "label": {
+                        "color": "#6B7280",
+                        "fontSize": "14px",
+                        "fontWeight": 500
+                    },
+                    "change": {
+                        "positive": "#10B981",
+                        "negative": "#F95654"
+                    }
+                }
+            },
+            "lists": {
+                "item": {
+                    "padding": "16px",
+                    "borderBottom": "1px solid #E8EBF0",
+                    "background": "#FFFFFF"
+                },
+                "icon": {
+                    "size": "40px",
+                    "borderRadius": "8px",
+                    "background": "#F0F9FF",
+                    "color": "#108EE9",
+                    "marginRight": "12px"
+                },
+                "primaryText": {
+                    "color": "#242424",
+                    "fontSize": "16px",
+                    "fontWeight": 500
+                },
+                "secondaryText": {
+                    "color": "#6B7280",
+                    "fontSize": "14px"
+                },
+                "amount": {
+                    "color": "#242424",
+                    "fontSize": "16px",
+                    "fontWeight": 600,
+                    "positive": "#10B981",
+                    "negative": "#F95654"
+                }
+            },
+            "emptyStates": {
+                "container": {
+                    "padding": "32px",
+                    "textAlign": "center"
+                },
+                "illustration": {
+                    "maxWidth": "200px",
+                    "marginBottom": "24px"
+                },
+                "message": {
+                    "color": "#6B7280",
+                    "fontSize": "14px",
+                    "lineHeight": 1.5
+                }
+            },
+            "backgrounds": {
+                "app": {
+                    "primary": "#F5F7FA",
+                    "secondary": "#FFFFFF"
+                },
+                "header": {
+                    "gradient": "linear-gradient(180deg, #108EE9 0%, #4DA3F4 100%)"
+                },
+                "sections": {
+                    "blue": "#108EE9",
+                    "white": "#FFFFFF",
+                    "gray": "#F5F7FA"
+                }
+            }
+        },
+        "spacing": {
+            "xs": "4px",
+            "sm": "8px",
+            "md": "12px",
+            "lg": "16px",
+            "xl": "24px",
+            "2xl": "32px",
+            "3xl": "48px"
+        },
+        "borderRadius": {
+            "sm": "4px",
+            "md": "8px",
+            "lg": "12px",
+            "xl": "16px",
+            "full": "9999px"
+        },
+        "shadows": {
+            "sm": "0 1px 2px rgba(0, 0, 0, 0.05)",
+            "md": "0 2px 8px rgba(0, 0, 0, 0.08)",
+            "lg": "0 4px 16px rgba(0, 0, 0, 0.12)",
+            "xl": "0 8px 24px rgba(0, 0, 0, 0.16)",
+            "colored": "0 4px 12px rgba(16, 142, 233, 0.2)"
+        },
+        "animations": {
+            "duration": {
+                "fast": "150ms",
+                "normal": "300ms",
+                "slow": "500ms"
+            },
+            "easing": {
+                "default": "cubic-bezier(0.4, 0, 0.2, 1)",
+                "bounce": "cubic-bezier(0.68, -0.55, 0.265, 1.55)"
+            }
+        },
+        "breakpoints": {
+            "mobile": "375px",
+            "tablet": "768px",
+            "desktop": "1024px"
+        },
+        "criticalRules": {
+            "DO_NOT": [
+                "Apply card gradients or shadows to icons",
+                "Use button colors on regular text",
+                "Apply header gradients to content areas",
+                "Mix illustration styles (keep flat geometric only)",
+                "Use brand colors for neutral UI elements like borders",
+                "Apply heavy shadows to small elements",
+                "Use multiple gradients in the same component",
+                "Apply text colors to backgrounds or vice versa",
+                "Use accent colors for large background areas",
+                "Mix border radius styles within the same component group"
+            ],
+            "ALWAYS": [
+                "Use white backgrounds for content cards",
+                "Apply blue gradient only to main header/navigation",
+                "Keep icons simple and monochromatic within cards",
+                "Use consistent border radius for similar components",
+                "Apply shadows only to elevated elements (cards, modals)",
+                "Use gray colors for secondary text and borders",
+                "Maintain high contrast for text readability",
+                "Use Plus Jakarta Sans for all text",
+                "Apply full-width styling to primary action buttons",
+                "Keep empty state messages in gray color"
+            ]
+        }
+    }
+}

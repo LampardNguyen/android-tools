@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Quickpay Design System Colors for Battery Alert App -->
+    
+    <!-- Brand Colors -->
+    <color name="brand_primary">#108EE9</color>
+    <color name="brand_primary_dark">#1677FF</color>
+    <color name="brand_primary_light">#4DA3F4</color>
+    <color name="brand_accent1">#FD9A16</color>
+    <color name="brand_accent2">#EA4E0D</color>
+    <color name="brand_warning">#FDD504</color>
+    <color name="brand_error">#F95654</color>
+    
+    <!-- Base Colors -->
+    <color name="base_white">#FFFFFF</color>
+    <color name="base_black">#242424</color>
+    
+    <!-- Gray Scale -->
+    <color name="gray_50">#F5F7FA</color>
+    <color name="gray_100">#E8EBF0</color>
+    <color name="gray_200">#D1D5DB</color>
+    <color name="gray_300">#9CA3AF</color>
+    <color name="gray_400">#6B7280</color>
+    <color name="gray_500">#4B5563</color>
+    <color name="gray_600">#374151</color>
+    <color name="gray_700">#1F2937</color>
+    <color name="gray_800">#111827</color>
+    
+    <!-- Semantic Colors -->
+    <color name="semantic_background_primary">#FFFFFF</color>
+    <color name="semantic_background_secondary">#F5F7FA</color>
+    <color name="semantic_background_tertiary">#E8EBF0</color>
+    
+    <color name="semantic_text_primary">#242424</color>
+    <color name="semantic_text_secondary">#6B7280</color>
+    <color name="semantic_text_tertiary">#9CA3AF</color>
+    <color name="semantic_text_inverse">#FFFFFF</color>
+    <color name="semantic_text_link">#108EE9</color>
+    
+    <color name="semantic_success">#10B981</color>
+    <color name="semantic_info">#108EE9</color>
+    <color name="semantic_warning">#FDD504</color>
+    <color name="semantic_error">#F95654</color>
+    
+    <!-- Material Design 3 Theme Colors (Mapped to Quickpay Design System) -->
+    <color name="md_theme_light_primary">@color/brand_primary</color>
+    <color name="md_theme_light_onPrimary">@color/semantic_text_inverse</color>
+    <color name="md_theme_light_primaryContainer">#E6F7FF</color>
+    <color name="md_theme_light_onPrimaryContainer">@color/brand_primary_dark</color>
+    
+    <color name="md_theme_light_secondary">@color/brand_accent1</color>
+    <color name="md_theme_light_onSecondary">@color/base_white</color>
+    <color name="md_theme_light_secondaryContainer">#FFF3E6</color>
+    <color name="md_theme_light_onSecondaryContainer">@color/brand_accent2</color>
+    
+    <color name="md_theme_light_tertiary">@color/semantic_success</color>
+    <color name="md_theme_light_onTertiary">@color/base_white</color>
+    <color name="md_theme_light_tertiaryContainer">#E6F7F0</color>
+    <color name="md_theme_light_onTertiaryContainer">@color/semantic_success</color>
+    
+    <color name="md_theme_light_surface">@color/semantic_background_primary</color>
+    <color name="md_theme_light_onSurface">@color/semantic_text_primary</color>
+    <color name="md_theme_light_surfaceVariant">@color/semantic_background_secondary</color>
+    <color name="md_theme_light_onSurfaceVariant">@color/semantic_text_secondary</color>
+    
+    <color name="md_theme_light_background">@color/semantic_background_secondary</color>
+    <color name="md_theme_light_onBackground">@color/semantic_text_primary</color>
+    
+    <color name="md_theme_light_error">@color/semantic_error</color>
+    <color name="md_theme_light_onError">@color/base_white</color>
+    <color name="md_theme_light_errorContainer">#FFF5F5</color>
+    <color name="md_theme_light_onErrorContainer">@color/semantic_error</color>
+    
+    <color name="md_theme_light_outline">@color/gray_200</color>
+    <color name="md_theme_light_outlineVariant">@color/gray_100</color>
+    <color name="md_theme_light_scrim">@color/base_black</color>
+    <color name="md_theme_light_shadow">@color/base_black</color>
+    
+    <color name="md_theme_light_inverseSurface">@color/gray_700</color>
+    <color name="md_theme_light_inverseOnSurface">@color/base_white</color>
+    <color name="md_theme_light_inversePrimary">#E6F7FF</color>
+    
+    <!-- Dark Theme Colors -->
+    <color name="md_theme_dark_primary">@color/brand_primary</color>
+    <color name="md_theme_dark_onPrimary">@color/base_white</color>
+    <color name="md_theme_dark_primaryContainer">@color/brand_primary_dark</color>
+    <color name="md_theme_dark_onPrimaryContainer">#E6F7FF</color>
+    
+    <color name="md_theme_dark_secondary">@color/brand_accent1</color>
+    <color name="md_theme_dark_onSecondary">@color/base_white</color>
+    <color name="md_theme_dark_secondaryContainer">@color/brand_accent2</color>
+    <color name="md_theme_dark_onSecondaryContainer">#FFF3E6</color>
+    
+    <color name="md_theme_dark_tertiary">@color/semantic_success</color>
+    <color name="md_theme_dark_onTertiary">@color/base_white</color>
+    <color name="md_theme_dark_tertiaryContainer">@color/semantic_success</color>
+    <color name="md_theme_dark_onTertiaryContainer">#E6F7F0</color>
+    
+    <color name="md_theme_dark_surface">@color/gray_700</color>
+    <color name="md_theme_dark_onSurface">@color/base_white</color>
+    <color name="md_theme_dark_surfaceVariant">@color/gray_600</color>
+    <color name="md_theme_dark_onSurfaceVariant">@color/gray_300</color>
+    
+    <color name="md_theme_dark_background">@color/gray_800</color>
+    <color name="md_theme_dark_onBackground">@color/base_white</color>
+    
+    <color name="md_theme_dark_error">@color/semantic_error</color>
+    <color name="md_theme_dark_onError">@color/base_white</color>
+    <color name="md_theme_dark_errorContainer">@color/semantic_error</color>
+    <color name="md_theme_dark_onErrorContainer">#FFF5F5</color>
+    
+    <color name="md_theme_dark_outline">@color/gray_500</color>
+    <color name="md_theme_dark_outlineVariant">@color/gray_600</color>
+    <color name="md_theme_dark_scrim">@color/base_black</color>
+    <color name="md_theme_dark_shadow">@color/base_black</color>
+    
+    <!-- Legacy colors for backward compatibility -->
+    <color name="black">@color/base_black</color>
+    <color name="white">@color/base_white</color>
+    
+    <!-- Battery Status Colors (Using Quickpay palette) -->
+    <color name="battery_critical">@color/semantic_error</color>
+    <color name="battery_low">@color/brand_warning</color>
+    <color name="battery_good">@color/semantic_success</color>
+    <color name="battery_full">@color/brand_primary</color>
+    <color name="battery_charging">@color/semantic_success</color>
+    
+    <!-- Component Specific Colors -->
+    <color name="card_background">@color/base_white</color>
+    <color name="card_shadow">#14000000</color> <!-- rgba(0,0,0,0.08) -->
+    <color name="card_border">@color/gray_100</color>
+    
+    <!-- Input Field Colors -->
+    <color name="input_background_default">@color/gray_50</color>
+    <color name="input_background_focus">@color/base_white</color>
+    <color name="input_background_error">#FFF5F5</color>
+    <color name="input_background_disabled">@color/gray_100</color>
+    
+    <color name="input_border_default">@color/gray_100</color>
+    <color name="input_border_focus">@color/brand_primary</color>
+    <color name="input_border_error">@color/semantic_error</color>
+    
+    <color name="input_text_default">@color/semantic_text_primary</color>
+    <color name="input_text_placeholder">@color/gray_300</color>
+    <color name="input_text_disabled">@color/gray_300</color>
+    
+    <!-- Button Colors -->
+    <color name="button_primary_background">@color/brand_primary</color>
+    <color name="button_primary_background_pressed">#0860CC</color>
+    <color name="button_primary_text">@color/base_white</color>
+    
+    <color name="button_secondary_background">@color/base_white</color>
+    <color name="button_secondary_background_pressed">#F0F9FF</color>
+    <color name="button_secondary_border">@color/brand_primary</color>
+    <color name="button_secondary_text">@color/brand_primary</color>
+    
+    <color name="button_tertiary_background">@android:color/transparent</color>
+    <color name="button_tertiary_background_pressed">#1A108EE9</color> <!-- rgba(16,142,233,0.08) -->
+    <color name="button_tertiary_text">@color/brand_primary</color>
+    
+    <color name="button_disabled_background">@color/gray_200</color>
+    <color name="button_disabled_text">@color/gray_300</color>
+    
+    <!-- Ripple and State Colors -->
+    <color name="ripple_primary">#33108EE9</color> <!-- rgba(16,142,233,0.2) -->
+    <color name="ripple_secondary">#33000000</color> <!-- rgba(0,0,0,0.2) -->
+    
+    <!-- Focus and Selection Colors -->
+    <color name="focus_ring_primary">#33108EE9</color> <!-- rgba(16,142,233,0.2) -->
+    <color name="focus_ring_error">#33F95654</color> <!-- rgba(249,86,84,0.2) -->
+    
+    <!-- Navigation and Header Colors -->
+    <color name="navigation_background">@color/brand_primary</color>
+    <color name="navigation_text">@color/base_white</color>
+    <color name="navigation_icon">@color/base_white</color>
+    
+    <!-- Status Bar Colors -->
+    <color name="status_bar_background">@android:color/transparent</color>
+    <color name="status_bar_icons">@color/base_black</color>
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Disabled State -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/input_background_disabled" />
+            <stroke android:width="1dp" android:color="@color/input_border_default" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    
+    <!-- Error State -->
+    <item android:state_activated="true">
+        <layer-list>
+            <!-- Focus Ring for Error -->
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/focus_ring_error" />
+                    <corners android:radius="8dp" />
+                </shape>
+            </item>
+            
+            <!-- Error Input Background -->
+            <item android:top="3dp" android:bottom="3dp" android:left="3dp" android:right="3dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/input_background_error" />
+                    <stroke android:width="1dp" android:color="@color/input_border_error" />
+                    <corners android:radius="8dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    
+    <!-- Focused State -->
+    <item android:state_focused="true">
+        <layer-list>
+            <!-- Focus Ring -->
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/focus_ring_primary" />
+                    <corners android:radius="8dp" />
+                </shape>
+            </item>
+            
+            <!-- Focused Input Background -->
+            <item android:top="3dp" android:bottom="3dp" android:left="3dp" android:right="3dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/input_background_focus" />
+                    <stroke android:width="1dp" android:color="@color/input_border_focus" />
+                    <corners android:radius="8dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    
+    <!-- Default State -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/input_background_default" />
+            <stroke android:width="1dp" android:color="@color/input_border_default" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    
+</selector>

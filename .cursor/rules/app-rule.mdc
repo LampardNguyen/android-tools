@@ -1,0 +1,279 @@
+---
+alwaysApply: true
+---
+
+# Battery Alert Android App - Cursor IDE Rules
+
+## Project Overview
+This is an Android application that monitors battery charging level and alerts users when the battery reaches a configurable threshold (default 80%) to help preserve battery health.
+
+## Core Features
+- Real-time battery level monitoring
+- Customizable battery threshold (0-100%)
+- Alarm sound notification when threshold is reached
+- Background service for continuous monitoring
+- Notification with custom ringtone selection
+- Auto-start on device boot
+- Battery optimization exemption handling
+
+## Tech Stack
+- **Language**: Kotlin (preferred) / Java
+- **Min SDK**: API 21 (Android 5.0 Lollipop)
+- **Target SDK**: Android 10
+- **Architecture**: MVVM (Model-View-ViewModel)
+- **Build System**: Gradle with Kotlin DSL
+- **UI Framework**: Material Design 3
+- **Dependency Injection**: Hilt
+- **Async Operations**: Coroutines + Flow
+- **Background Processing**: WorkManager + Foreground Service
+- **Local Storage**: SharedPreferences / DataStore
+- **Database** (if needed): Room
+
+## Project Structure
+```
+app/
+├── src/
+│   ├── main/
+│   │   ├── java/com/batteryalert/
+│   │   │   ├── data/
+│   │   │   │   ├── model/
+│   │   │   │   ├── repository/
+│   │   │   │   └── preferences/
+│   │   │   ├── domain/
+│   │   │   │   ├── usecase/
+│   │   │   │   └── repository/
+│   │   │   ├── presentation/
+│   │   │   │   ├── ui/
+│   │   │   │   │   ├── main/
+│   │   │   │   │   ├── settings/
+│   │   │   │   │   └── common/
+│   │   │   │   └── viewmodel/
+│   │   │   ├── service/
+│   │   │   │   ├── BatteryMonitorService.kt
+│   │   │   │   └── NotificationHelper.kt
+│   │   │   ├── receiver/
+│   │   │   │   ├── BatteryBroadcastReceiver.kt
+│   │   │   │   └── BootCompletedReceiver.kt
+│   │   │   ├── utils/
+│   │   │   │   ├── Constants.kt
+│   │   │   │   ├── Extensions.kt
+│   │   │   │   └── PermissionHelper.kt
+│   │   │   ├── di/
+│   │   │   │   └── AppModule.kt
+│   │   │   └── BatteryAlertApplication.kt
+│   │   └── res/
+```
+
+## Code Style Guidelines
+
+### Kotlin Conventions
+- Use `val` over `var` whenever possible
+- Prefer data classes for model objects
+- Use sealed classes for state management
+- Implement null safety properly
+- Use extension functions for utility methods
+- Follow Kotlin naming conventions (camelCase for functions/variables, PascalCase for classes)
+
+### Android Best Practices
+- Always use ViewBinding instead of findViewById
+- Implement proper lifecycle management
+- Handle configuration changes correctly
+- Use string resources for all user-facing text
+- Implement proper error handling with try-catch blocks
+- Check permissions before accessing protected features
+- Use Timber for logging in debug builds
+
+### MVVM Architecture Rules
+- ViewModels should not reference Views or Context (except ApplicationContext)
+- Use LiveData or StateFlow for UI state observation
+- Repository pattern for data operations
+- Single source of truth principle
+- Separation of concerns between layers
+
+## Key Components Implementation
+
+### 1. BatteryMonitorService
+- Must be a Foreground Service for Android 8.0+
+- Show persistent notification while monitoring
+- Handle Doze mode and App Standby
+- Implement proper service lifecycle
+- Use WakeLock if necessary
+
+### 2. BatteryBroadcastReceiver
+- Register for ACTION_BATTERY_CHANGED
+- Filter for charging state changes
+- Check battery level against threshold
+- Trigger notification only when charging
+
+### 3. Notification System
+- Create NotificationChannel for Android O+
+- Set proper notification priority (HIGH/MAX)
+- Use custom sound with looping
+- Implement dismiss and snooze actions
+- Handle Do Not Disturb mode
+
+### 4. Permissions Required
+```xml
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+<uses-permission android:name="android.permission.VIBRATE" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+```
+
+## Dependencies (build.gradle.kts)
+```kotlin
+dependencies {
+    // Core Android
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.activity:activity-compose:1.8.2")
+    
+    // UI
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    
+    // Architecture Components
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-compiler:2.48")
+    
+    // WorkManager
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    
+    // DataStore (preferred over SharedPreferences)
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    
+    // Testing
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}
+```
+
+## Common Issues & Solutions
+
+### Issue 1: Service killed in background
+- Use Foreground Service with proper notification
+- Request battery optimization exemption
+- Implement WorkManager as fallback
+
+### Issue 2: Notification not showing
+- Check notification permission (Android 13+)
+- Verify NotificationChannel is created
+- Check Do Not Disturb settings
+
+### Issue 3: Alarm sound not playing
+- Check audio focus
+- Verify ringtone URI is valid
+- Handle silent mode appropriately
+
+### Issue 4: Not starting after reboot
+- Ensure RECEIVE_BOOT_COMPLETED permission
+- Check if app is in stopped state
+- Implement DirectBootAware if needed
+
+## Testing Guidelines
+- Unit test all ViewModels
+- Test BroadcastReceivers with mock intents
+- Test Service lifecycle
+- UI test critical user flows
+- Test on multiple Android versions (5.0 - 14)
+- Test battery optimization scenarios
+
+## Performance Considerations
+- Minimize battery drain from monitoring
+- Use efficient data structures
+- Avoid memory leaks (especially in Service)
+- Optimize notification updates
+- Implement proper threading
+
+## Security & Privacy
+- No internet permission required
+- No user data collection
+- All data stored locally
+- Follow Android security best practices
+- Implement proper permission handling
+
+## AI Assistant Guidelines
+When generating code for this project:
+1. Always use Kotlin unless specifically asked for Java
+2. Follow MVVM architecture strictly
+3. Implement proper error handling
+4. Add meaningful comments for complex logic
+5. Use coroutines for async operations
+6. Implement proper lifecycle management
+7. Follow Material Design guidelines
+8. Ensure backward compatibility to API 21
+9. Handle edge cases (battery removed, tablet devices, etc.)
+10. Always check permissions before using protected features
+
+## Sample Code Templates
+
+### ViewModel Template
+```kotlin
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val batteryRepository: BatteryRepository
+) : ViewModel() {
+    private val _uiState = MutableStateFlow(MainUiState())
+    val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
+    
+    // Implementation
+}
+```
+
+### Service Template
+```kotlin
+@AndroidEntryPoint
+class BatteryMonitorService : Service() {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        startForeground(NOTIFICATION_ID, createNotification())
+        return START_STICKY
+    }
+}
+```
+
+### Repository Template
+```kotlin
+interface BatteryRepository {
+    suspend fun getBatteryLevel(): Int
+    suspend fun saveThreshold(value: Int)
+    fun observeBatteryChanges(): Flow<BatteryInfo>
+}
+```
+
+## Build & Release
+- Use ProGuard/R8 for release builds
+- Sign APK with proper keystore
+- Version code increment for each release
+- Generate AAB for Play Store
+- Test release build thoroughly
+
+## Documentation Requirements
+- Document all public APIs
+- Add KDoc comments for complex functions
+- Maintain README.md with setup instructions
+- Document known issues and workarounds
+- Keep changelog updated
+
+## Specific Cursor IDE Instructions
+- Auto-import Kotlin extensions
+- Use Android Studio code style
+- Generate meaningful variable names
+- Suggest appropriate error handling
+- Recommend performance optimizations
+- Flag potential memory leaks
+- Suggest appropriate Android SDK methods
+- Warn about deprecated APIs
+- Recommend androidx libraries over support libraries
+- Suggest coroutine usage over callbacks/AsyncTask# Battery Alert Android App - Cursor IDE Rules
+
