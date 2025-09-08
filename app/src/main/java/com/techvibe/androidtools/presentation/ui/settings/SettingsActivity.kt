@@ -1,6 +1,9 @@
 package com.techvibe.androidtools.presentation.ui.settings
 
 import android.content.Intent
+import android.media.AudioAttributes
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
@@ -33,6 +36,9 @@ class SettingsActivity : AppCompatActivity() {
     
     private lateinit var binding: ActivitySettingsBinding
     private val viewModel: SettingsViewModel by viewModels()
+    
+    // Local media player for previewing notification sound
+    private var previewPlayer: MediaPlayer? = null
     
     /**
      * Activity result launcher for ringtone picker
@@ -141,9 +147,9 @@ class SettingsActivity : AppCompatActivity() {
                 }
             })
             
-            // Test volume button
+            // Test volume button: play current notification sound at selected volume
             btnTestVolume.setOnClickListener {
-                viewModel.testVolume()
+                testNotificationSound()
             }
             
             // Vibration switch
@@ -237,8 +243,17 @@ class SettingsActivity : AppCompatActivity() {
      */
     private fun openRingtonePicker() {
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
+            // Restrict to system notification sounds only
             putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
             putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, getString(R.string.select_ringtone))
+            putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
+            putExtra(
+                RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
+                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            )
+            // Allow selecting Silent from system list
+            putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
+            // Current selection (if any)
             putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, viewModel.getCurrentRingtoneUri())
         }
         
@@ -320,6 +335,76 @@ class SettingsActivity : AppCompatActivity() {
     }
     
     /**
+     * Play a short preview of the currently selected notification sound
+     */
+    private fun testNotificationSound() {
+        val selectedUri: Uri? = viewModel.getCurrentRingtoneUri()
+        val effectiveUri: Uri = selectedUri
+            ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val volumePercent = viewModel.uiState.value?.notificationVolume ?: 80
+
+        // Stop any previous preview
+        stopPreview()
+
+        try {
+            previewPlayer = MediaPlayer().apply {
+                setDataSource(this@SettingsActivity, effectiveUri)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    setAudioAttributes(
+                        AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                            .build()
+                    )
+                } else {
+                    @Suppress("DEPRECATION")
+                    setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
+                }
+                val vol = (volumePercent.coerceIn(0, 100) / 100f)
+                setVolume(vol, vol)
+                isLooping = false
+                setOnPreparedListener { it.start() }
+                setOnCompletionListener { stopPreview() }
+                setOnErrorListener { _, _, _ ->
+                    // If playback fails, fallback to system ringtone play
+                    stopPreview()
+                    try {
+                        val fallback = RingtoneManager.getRingtone(
+                            this@SettingsActivity,
+                            RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                        )
+                        fallback?.play()
+                    } catch (_: Exception) { }
+                    true
+                }
+                prepareAsync()
+            }
+        } catch (e: Exception) {
+            // Fallback to default system sound if MediaPlayer fails
+            stopPreview()
+            try {
+                val fallback = RingtoneManager.getRingtone(
+                    this,
+                    RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                )
+                fallback?.play()
+            } catch (_: Exception) {
+                showToast(getString(R.string.error_ringtone_not_found))
+            }
+        }
+    }
+
+    private fun stopPreview() {
+        try {
+            previewPlayer?.let { mp ->
+                if (mp.isPlaying) mp.stop()
+                mp.release()
+            }
+        } catch (_: Exception) { }
+        previewPlayer = null
+    }
+    
+    /**
      * Save all current settings
      */
     private fun saveAllSettings() {
@@ -349,5 +434,10 @@ class SettingsActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+    
+    override fun onDestroy() {
+        super.onDestroy()
+        stopPreview()
     }
 }

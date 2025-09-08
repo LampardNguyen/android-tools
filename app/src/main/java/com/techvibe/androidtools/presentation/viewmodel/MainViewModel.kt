@@ -1,12 +1,21 @@
 package com.techvibe.androidtools.presentation.viewmodel
 
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.techvibe.androidtools.data.model.BatteryInfo
 import com.techvibe.androidtools.domain.repository.BatteryRepository
+import com.techvibe.androidtools.service.BatteryMonitorService
+import com.techvibe.androidtools.utils.Constants.ACTION_BATTERY_THRESHOLD_REACHED
+import com.techvibe.androidtools.utils.Constants.EXTRA_BATTERY_LEVEL
+import com.techvibe.androidtools.utils.Constants.EXTRA_IS_CHARGING
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,7 +25,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val batteryRepository: BatteryRepository
+    private val batteryRepository: BatteryRepository,
+    @ApplicationContext private val appContext: Context
 ) : ViewModel() {
     
     private val _batteryInfo = MutableLiveData<BatteryInfo>()
@@ -120,12 +130,21 @@ class MainViewModel @Inject constructor(
     fun testNotification() {
         viewModelScope.launch {
             try {
-                val currentBattery = _batteryInfo.value ?: return@launch
-                val threshold = _uiState.value?.batteryThreshold ?: 80
-                
-                // TODO: Implement notification testing
-                // For now, just show that it's working
-                
+                // Use configured threshold; simulate a level above it and 'charging'
+                val threshold = _uiState.value?.batteryThreshold
+                    ?: batteryRepository.getBatteryThreshold()
+                val simulatedLevel = (threshold + 1).coerceAtMost(100)
+
+                val intent = Intent(appContext, BatteryMonitorService::class.java).apply {
+                    action = ACTION_BATTERY_THRESHOLD_REACHED
+                    putExtra(EXTRA_BATTERY_LEVEL, simulatedLevel)
+                    putExtra(EXTRA_IS_CHARGING, true)
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    ContextCompat.startForegroundService(appContext, intent)
+                } else {
+                    appContext.startService(intent)
+                }
             } catch (e: Exception) {
                 _errorMessage.value = "Lỗi khi thử nghiệm thông báo: ${e.message}"
             }
