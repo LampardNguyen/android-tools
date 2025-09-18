@@ -1,8 +1,10 @@
 <resources>
     <!-- App Name -->
-    <string name="app_name">Battery Alert</string>
-    <string name="app_title">Battery Alert</string>
+    <string name="app_name">Android Tools</string>
+    <string name="app_title">Android Tools</string>
+    <string name="battery_alert_title">Battery Alert</string>
     <string name="app_subtitle">Bảo vệ pin điện thoại của bạn</string>
+    <string name="battery_alert_subtitle">Cài đặt thông báo pin thông minh</string>
 
     <!-- Main Activity -->
     <string name="enable_monitoring">Bật thông báo pin</string>
@@ -34,7 +36,7 @@
     <string name="about">Thông tin ứng dụng</string>
 
     <!-- Notifications -->
-    <string name="battery_alert_title">Cảnh báo pin!</string>
+    <string name="battery_alert_notification_title">Cảnh báo pin!</string>
     <string name="battery_alert_message">Pin đã đạt %1$d%%. Hãy ngừng sạc để bảo vệ pin.</string>
     <string name="service_notification_title">Đang theo dõi pin</string>
     <string name="service_notification_message">Ứng dụng đang giám sát mức pin của bạn</string>
@@ -93,4 +95,27 @@
     <string name="grant_permissions">Cấp quyền</string>
     <string name="battery_optimization_disabled">Tối ưu hóa pin đã được tắt cho ứng dụng</string>
     <string name="battery_optimization_warning">Vui lòng tắt tối ưu hóa pin để ứng dụng hoạt động tốt nhất</string>
+
+    <!-- Menu Activity -->
+    <string name="menu_title">Menu</string>
+    <string name="menu_battery_alert_title">battery alert</string>
+    <string name="menu_battery_alert_description">Cài đặt thông báo khi pin đạt ngưỡng</string>
+    <string name="menu_float_volume_title">float menu</string>
+    <string name="menu_float_volume_description">Cài đặt nút âm lượng nổi</string>
+    <string name="battery_alert_icon_description">Biểu tượng pin đang sạc</string>
+    <string name="float_volume_icon_description">Biểu tượng âm lượng</string>
+    <string name="navigate_to_settings">Chuyển đến cài đặt</string>
+    <string name="app_version">v1.0.0</string>
+    <string name="back_to_menu">Quay về menu</string>
+    
+    <!-- Float Volume Settings -->
+    <string name="float_volume_settings_title">Float Volume Settings</string>
+    <string name="float_volume_settings_subtitle">Cài đặt nút âm lượng nổi trên màn hình</string>
+    
+    <!-- Overlay Permission -->
+    <string name="overlay_permission_title">Quyền hiển thị overlay</string>
+    <string name="overlay_permission_message">Ứng dụng cần quyền hiển thị overlay để hiện nút âm lượng nổi trên màn hình</string>
+    <string name="grant_overlay_permission">Cấp quyền overlay</string>
+    <string name="float_buttons_enabled">Nút âm lượng nổi đã được bật</string>
+    <string name="float_buttons_disabled">Nút âm lượng nổi đã được tắt</string>
 </resources>

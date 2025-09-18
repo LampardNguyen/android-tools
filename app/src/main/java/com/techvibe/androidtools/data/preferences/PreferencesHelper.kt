@@ -49,6 +49,11 @@ class PreferencesHelper @Inject constructor(
         get() = sharedPreferences.getString(KEY_NOTIFICATION_SOUND_URI, null)
         set(value) = sharedPreferences.edit().putString(KEY_NOTIFICATION_SOUND_URI, value).apply()
     
+    // Notification ringtone URI (non-null convenience property)
+    var notificationRingtoneUri: String
+        get() = sharedPreferences.getString(KEY_NOTIFICATION_SOUND_URI, "") ?: ""
+        set(value) = sharedPreferences.edit().putString(KEY_NOTIFICATION_SOUND_URI, value).apply()
+    
     // Vibration enable/disable
     var isVibrationEnabled: Boolean
         get() = sharedPreferences.getBoolean(KEY_IS_VIBRATION_ENABLED, true)

@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:name=".BatteryAlertApplication"
@@ -22,8 +24,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidTools"
         tools:targetApi="31">
+        <!-- Menu Activity - Main Launcher -->
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.ui.menu.MenuActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.AndroidTools">
@@ -33,12 +36,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
+        <!-- Main Activity - Battery Controls -->
         <activity
-            android:name=".presentation.ui.settings.SettingsActivity"
+            android:name=".MainActivity"
             android:exported="false"
-            android:label="@string/settings_title"
-            android:parentActivityName=".MainActivity"
+            android:label="@string/app_title"
+            android:parentActivityName=".presentation.ui.menu.MenuActivity"
+            android:theme="@style/Theme.AndroidTools" />
+            
+        <!-- Float Volume Settings Activity -->
+        <activity
+            android:name=".presentation.ui.floatvolume.FloatVolumeSettingsActivity"
+            android:exported="false"
+            android:label="@string/float_volume_settings_title"
+            android:parentActivityName=".presentation.ui.menu.MenuActivity"
             android:theme="@style/Theme.AndroidTools" />
             
         <!-- Battery Monitor Service -->
@@ -47,6 +59,12 @@
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="specialUse" />
+            
+        <!-- Floating Volume Service -->
+        <service
+            android:name=".service.FloatingVolumeService"
+            android:enabled="true"
+            android:exported="false" />
             
         <!-- Battery Broadcast Receiver -->
         <receiver

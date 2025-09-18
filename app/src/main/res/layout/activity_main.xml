@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -20,23 +21,49 @@
             android:layout_marginBottom="24dp"
             android:background="@drawable/bg_gradient_header"
             android:orientation="vertical"
-            android:paddingHorizontal="24dp"
+            android:paddingHorizontal="8dp"
             android:paddingTop="48dp"
             android:paddingBottom="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <!-- App Title -->
-            <TextView
+            <!-- Header with Back Button -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/app_title"
-                android:textColor="@color/navigation_text"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif-medium" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Back Button -->
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_arrow_back"
+                    app:tint="@color/base_white"
+                    android:contentDescription="@string/back_to_menu" />
+
+                <!-- App Title -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="12dp"
+                    android:gravity="center"
+                    android:text="@string/battery_alert_title"
+                    android:textColor="@color/navigation_text"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+                <!-- Spacer to balance back button -->
+                <View
+                    android:layout_width="48dp"
+                    android:layout_height="48dp" />
+
+            </LinearLayout>
 
             <!-- App Subtitle -->
             <TextView
@@ -44,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="@string/app_subtitle"
+                android:text="@string/battery_alert_subtitle"
                 android:textColor="@color/navigation_text"
                 android:textSize="14sp"
                 android:alpha="0.9"
@@ -265,13 +292,14 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Action Buttons Card -->
+
+        <!-- Notification Settings Card -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/actionsCard"
+            android:id="@+id/notificationCard"
             style="@style/Widget.AndroidTools.CardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="212dp"
             android:layout_marginHorizontal="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -286,37 +314,122 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/actions_title"
+                    android:text="@string/notification_settings"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                     android:textColor="@color/md_theme_light_onSurface" />
 
-                <!-- Test Notification Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnTestNotification"
-                    style="@style/Widget.AndroidTools.Button.Primary"
+                <!-- Ringtone Selection -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/test_notification"
-                    app:icon="@drawable/ic_notification_test"
-                    app:iconTint="@color/base_white"
-                    app:iconGravity="textStart" />
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <!-- Settings Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSettings"
-                    style="@style/Widget.AndroidTools.Button.Secondary"
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/select_ringtone"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                            android:textColor="@color/md_theme_light_onSurface" />
+
+                        <TextView
+                            android:id="@+id/tvSelectedRingtone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                            android:textColor="@color/md_theme_light_onSurfaceVariant"
+                            tools:text="Default notification" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSelectRingtone"
+                        style="@style/Widget.AndroidTools.Button.Tertiary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/select_ringtone"
+                        app:icon="@drawable/ic_music_note"
+                        app:iconTint="@color/brand_primary" />
+
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="16dp"
+                    android:background="@color/md_theme_light_outlineVariant" />
+
+                <!-- Vibration Setting -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/settings"
-                    app:icon="@drawable/ic_settings"
-                    app:iconTint="@color/brand_primary"
-                    app:iconGravity="textStart" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/enable_vibration"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                        android:textColor="@color/md_theme_light_onSurface" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchVibration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="16dp"
+                    android:background="@color/md_theme_light_outlineVariant" />
+
+                <!-- Repeat Interval Setting -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/repeat_interval"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="@color/md_theme_light_onSurface" />
+
+                <!-- Interval Input -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilRepeatInterval"
+                    style="@style/Widget.AndroidTools.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/repeat_interval"
+                    app:suffixText="giây">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etRepeatInterval"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text="30"
+                        android:textColor="@color/semantic_text_primary"
+                        android:textColorHint="@color/semantic_text_secondary" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

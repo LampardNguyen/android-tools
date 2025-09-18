@@ -1,7 +1,10 @@
 package com.techvibe.androidtools
 
+import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -35,6 +38,10 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var batteryReceiver: BatteryBroadcastReceiver
     
+    companion object {
+        private const val REQUEST_RINGTONE_PICKER = 1001
+    }
+    
     @Inject
     lateinit var preferencesHelper: PreferencesHelper
     
@@ -55,35 +62,25 @@ class MainActivity : AppCompatActivity() {
     }
     
     /**
-     * Setup status bar appearance based on system theme
+     * Setup status bar to be transparent with light icons
      */
     private fun setupStatusBar() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.setSystemBarsAppearance(
-                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                0, // Clear the light status bars flag to show light icons on dark background
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
             )
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            window.decorView.systemUiVisibility = 
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
         
-        // Add top padding to account for status bar
-        binding.root.setPadding(0, getStatusBarHeight(), 0, 0)
-    }
-    
-    /**
-     * Get status bar height
-     */
-    private fun getStatusBarHeight(): Int {
-        var result = 0
-        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            result = resources.getDimensionPixelSize(resourceId)
-        }
-        return result
+        // Set status bar color to transparent
+        window.statusBarColor = android.graphics.Color.TRANSPARENT
     }
     
     /**
@@ -119,22 +116,38 @@ class MainActivity : AppCompatActivity() {
                 updateMonitoringStatus(isChecked)
             }
             
-            // Setup test notification button
-            btnTestNotification.setOnClickListener {
-                viewModel.testNotification()
-                showToast(getString(R.string.test_notification_sent))
+            
+            
+            // Setup back button
+            btnBack.setOnClickListener {
+                navigateBackToMenu()
             }
             
-            // Setup debug button (long click on test notification)
-            btnTestNotification.setOnLongClickListener {
-                showDebugInfo()
-                true
+            // Setup ringtone selection button
+            btnSelectRingtone.setOnClickListener {
+                openRingtonePicker()
             }
             
-            // Setup settings button
-            btnSettings.setOnClickListener {
-                navigateToSettings()
+            
+            // Setup vibration switch listener
+            switchVibration.setOnCheckedChangeListener { _, isChecked ->
+                lifecycleScope.launch {
+                    preferencesHelper.isVibrationEnabled = isChecked
+                }
+                val message = if (isChecked) "Vibration enabled" else "Vibration disabled"
+                showToast(message)
             }
+            
+            // Setup repeat interval text watcher
+            etRepeatInterval.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    val interval = etRepeatInterval.text.toString().toIntOrNull() ?: 30
+                    lifecycleScope.launch {
+                        preferencesHelper.repeatIntervalSeconds = interval
+                    }
+                }
+            }
+            
         }
     }
     
@@ -209,9 +222,13 @@ class MainActivity : AppCompatActivity() {
             seekBarThreshold.progress = uiState.batteryThreshold
             tvThresholdValue.text = "${uiState.batteryThreshold}%"
             
+            // Load settings values
+            switchVibration.isChecked = preferencesHelper.isVibrationEnabled
+            etRepeatInterval.setText(preferencesHelper.repeatIntervalSeconds.toString())
+            tvSelectedRingtone.text = getRingtoneName(preferencesHelper.notificationRingtoneUri)
+            
             // Enable/disable UI components based on monitoring state
             seekBarThreshold.isEnabled = uiState.isMonitoringEnabled
-            btnTestNotification.isEnabled = true
         }
     }
     
@@ -227,12 +244,12 @@ class MainActivity : AppCompatActivity() {
         showToast(message)
     }
     
+    
     /**
-     * Navigate to Settings Activity
+     * Navigate back to Menu Activity
      */
-    private fun navigateToSettings() {
-        val intent = android.content.Intent(this, com.techvibe.androidtools.presentation.ui.settings.SettingsActivity::class.java)
-        startActivity(intent)
+    private fun navigateBackToMenu() {
+        finish() // This will go back to MenuActivity since it's the parent
     }
     
     /**
@@ -345,17 +362,36 @@ class MainActivity : AppCompatActivity() {
     }
     
     /**
-     * Handle activity results (for battery optimization permission)
+     * Handle activity results (for battery optimization permission and ringtone picker)
      */
     @Deprecated("Deprecated in API level 30")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: android.content.Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         
-        if (requestCode == com.techvibe.androidtools.utils.Constants.PERMISSION_REQUEST_IGNORE_BATTERY_OPTIMIZATION) {
-            if (PermissionHelper.isBatteryOptimizationIgnored(this)) {
-                showToast(getString(R.string.battery_optimization_disabled))
-            } else {
-                showToast(getString(R.string.battery_optimization_warning))
+        when (requestCode) {
+            com.techvibe.androidtools.utils.Constants.PERMISSION_REQUEST_IGNORE_BATTERY_OPTIMIZATION -> {
+                if (PermissionHelper.isBatteryOptimizationIgnored(this)) {
+                    showToast(getString(R.string.battery_optimization_disabled))
+                } else {
+                    showToast(getString(R.string.battery_optimization_warning))
+                }
+            }
+            REQUEST_RINGTONE_PICKER -> {
+                if (resultCode == RESULT_OK && data != null) {
+                    val ringtoneUri = data.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
+                    if (ringtoneUri != null) {
+                        // Save selected ringtone
+                        preferencesHelper.notificationRingtoneUri = ringtoneUri.toString()
+                        // Update UI
+                        binding.tvSelectedRingtone.text = getRingtoneName(ringtoneUri.toString())
+                        showToast("Ringtone updated")
+                    } else {
+                        // User selected "Silent" or "Default"
+                        preferencesHelper.notificationRingtoneUri = ""
+                        binding.tvSelectedRingtone.text = "Default notification"
+                        showToast("Ringtone set to default")
+                    }
+                }
             }
         }
     }
@@ -378,6 +414,50 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
     }
+    
+    /**
+     * Open ringtone picker dialog
+     */
+    private fun openRingtonePicker() {
+        val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
+            putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
+            putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Notification Sound")
+            putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
+            putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
+            
+            // Set current ringtone as default selection
+            val currentRingtoneUri = preferencesHelper.notificationRingtoneUri
+            if (currentRingtoneUri.isNotEmpty()) {
+                putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, Uri.parse(currentRingtoneUri))
+            } else {
+                putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            }
+        }
+        
+        try {
+            startActivityForResult(intent, REQUEST_RINGTONE_PICKER)
+        } catch (e: Exception) {
+            showToast("Could not open ringtone picker")
+        }
+    }
+    
+    /**
+     * Get ringtone name from URI
+     */
+    private fun getRingtoneName(uriString: String): String {
+        return try {
+            if (uriString.isEmpty()) {
+                "Default notification"
+            } else {
+                val uri = Uri.parse(uriString)
+                val ringtone = RingtoneManager.getRingtone(this, uri)
+                ringtone?.getTitle(this) ?: "Unknown ringtone"
+            }
+        } catch (e: Exception) {
+            "Default notification"
+        }
+    }
+    
     
     override fun onDestroy() {
         super.onDestroy()
