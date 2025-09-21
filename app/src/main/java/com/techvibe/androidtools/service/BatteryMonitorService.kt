@@ -46,18 +46,35 @@ class BatteryMonitorService : Service() {
     private var vibrator: Vibrator? = null
     private val handler = Handler(Looper.getMainLooper())
     private val ringtoneHandler = Handler(Looper.getMainLooper())
+    private val soundRepeatHandler = Handler(Looper.getMainLooper())
     private var wakeLock: PowerManager.WakeLock? = null
     private var isAlertActive = false
     private var currentBatteryLevel = 0
     private var currentThreshold = 80
+    private var currentSoundRepeatCount = 0
     
-    // Ringtone repeat runnable
+    // Ringtone repeat runnable (for interval-based repeats)
     private val ringtoneRepeatRunnable = object : Runnable {
         override fun run() {
             if (isAlertActive) {
-                playRingtone()
+                playSoundSequence()
                 val repeatInterval = (preferencesHelper.repeatIntervalSeconds * 1000).toLong()
                 ringtoneHandler.postDelayed(this, repeatInterval)
+            }
+        }
+    }
+    
+    // Sound repeat runnable (for playing multiple times in sequence)
+    private val soundRepeatRunnable = object : Runnable {
+        override fun run() {
+            if (isAlertActive && currentSoundRepeatCount > 0) {
+                playRingtone()
+                currentSoundRepeatCount--
+                
+                if (currentSoundRepeatCount > 0) {
+                    // Schedule next sound in sequence (with short delay)
+                    soundRepeatHandler.postDelayed(this, 1500L) // 1.5 seconds between sounds
+                }
             }
         }
     }
@@ -216,8 +233,8 @@ class BatteryMonitorService : Service() {
         // Show notification
         notificationHelper.showBatteryAlert(currentBatteryLevel, currentThreshold)
         
-        // Start ringtone
-        playRingtone()
+        // Start sound sequence
+        playSoundSequence()
         
         // Start vibration
         startVibration()
@@ -247,6 +264,7 @@ class BatteryMonitorService : Service() {
         
         // Remove scheduled repeats
         ringtoneHandler.removeCallbacks(ringtoneRepeatRunnable)
+        soundRepeatHandler.removeCallbacks(soundRepeatRunnable)
         
         // Release wake lock
         releaseWakeLock()
@@ -262,6 +280,20 @@ class BatteryMonitorService : Service() {
         } else {
             @Suppress("DEPRECATION")
             ContextCompat.getSystemService(this, Vibrator::class.java)
+        }
+    }
+    
+    /**
+     * Play sound sequence based on sound repeat count setting
+     */
+    private fun playSoundSequence() {
+        val repeatCount = preferencesHelper.soundRepeatCount
+        currentSoundRepeatCount = repeatCount
+        Log.d(TAG_BATTERY_SERVICE, "Starting sound sequence with $repeatCount repeats")
+        
+        // Start the sound repeat sequence
+        if (currentSoundRepeatCount > 0) {
+            soundRepeatRunnable.run()
         }
     }
     
@@ -466,5 +498,6 @@ class BatteryMonitorService : Service() {
         releaseWakeLock()
         handler.removeCallbacksAndMessages(null)
         ringtoneHandler.removeCallbacksAndMessages(null)
+        soundRepeatHandler.removeCallbacksAndMessages(null)
     }
 }

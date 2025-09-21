@@ -7,6 +7,8 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsetsController
 import androidx.core.view.WindowCompat
@@ -148,6 +150,37 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             
+            // Setup sound repeat count text watcher
+            etSoundRepeatCount.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                
+                override fun afterTextChanged(s: Editable?) {
+                    val input = s?.toString()
+                    if (!input.isNullOrEmpty()) {
+                        try {
+                            val count = input.toInt()
+                            if (count in 1..10) {
+                                // Valid input, clear error and save to preferences
+                                tilSoundRepeatCount.error = null
+                                lifecycleScope.launch {
+                                    preferencesHelper.soundRepeatCount = count
+                                }
+                            } else {
+                                // Invalid range, show error
+                                tilSoundRepeatCount.error = "Số lần phải từ 1 đến 10"
+                            }
+                        } catch (e: NumberFormatException) {
+                            // Invalid number format, show error
+                            tilSoundRepeatCount.error = "Vui lòng nhập số hợp lệ"
+                        }
+                    } else {
+                        // Empty input, clear error but don't save
+                        tilSoundRepeatCount.error = null
+                    }
+                }
+            })
+            
         }
     }
     
@@ -225,6 +258,7 @@ class MainActivity : AppCompatActivity() {
             // Load settings values
             switchVibration.isChecked = preferencesHelper.isVibrationEnabled
             etRepeatInterval.setText(preferencesHelper.repeatIntervalSeconds.toString())
+            etSoundRepeatCount.setText(preferencesHelper.soundRepeatCount.toString())
             tvSelectedRingtone.text = getRingtoneName(preferencesHelper.notificationRingtoneUri)
             
             // Enable/disable UI components based on monitoring state

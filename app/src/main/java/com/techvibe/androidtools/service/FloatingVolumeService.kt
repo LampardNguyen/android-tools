@@ -11,6 +11,9 @@ import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity
@@ -38,6 +41,7 @@ class FloatingVolumeService : Service(), SharedPreferences.OnSharedPreferenceCha
     private var displayMetrics: DisplayMetrics? = null
     private var snapHandler = Handler(Looper.getMainLooper())
     private var snapRunnable: Runnable? = null
+    private var vibrator: Vibrator? = null
 
     companion object {
         const val ACTION_START_FLOATING = "START_FLOATING"
@@ -75,6 +79,15 @@ class FloatingVolumeService : Service(), SharedPreferences.OnSharedPreferenceCha
         audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
         preferences = FloatVolumePreferences(this)
         preferences?.registerOnChangeListener(this)
+        
+        // Initialize vibrator
+        vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(VIBRATOR_SERVICE) as Vibrator
+        }
         
         updateDisplayMetrics()
     }
@@ -164,12 +177,36 @@ class FloatingVolumeService : Service(), SharedPreferences.OnSharedPreferenceCha
     }
 
     private fun showSystemVolumeControl() {
+        // Trigger light vibration before showing volume control
+        performLightVibration()
+        
         // Show system volume control by adjusting volume with 0 change but show UI
         audioManager?.adjustStreamVolume(
             AudioManager.STREAM_MUSIC,
             AudioManager.ADJUST_SAME,
             AudioManager.FLAG_SHOW_UI
         )
+    }
+    
+    /**
+     * Perform light vibration when floating volume button is clicked
+     */
+    private fun performLightVibration() {
+        try {
+            vibrator?.let { vib ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    // Use VibrationEffect for API 26+
+                    val vibrationEffect = VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE)
+                    vib.vibrate(vibrationEffect)
+                } else {
+                    // Use deprecated method for older versions
+                    @Suppress("DEPRECATION")
+                    vib.vibrate(50)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error during vibration", e)
+        }
     }
 
     private fun makeViewDraggableWithSnap(view: View, params: WindowManager.LayoutParams) {

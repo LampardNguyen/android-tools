@@ -118,4 +118,8 @@
     <string name="grant_overlay_permission">Cấp quyền overlay</string>
     <string name="float_buttons_enabled">Nút âm lượng nổi đã được bật</string>
     <string name="float_buttons_disabled">Nút âm lượng nổi đã được tắt</string>
+    
+    <!-- Sound Repeat -->
+    <string name="sound_repeat_count">Số lần phát âm thanh</string>
+    <string name="sound_repeat_count_hint">Số lần (1-10)</string>
 </resources>

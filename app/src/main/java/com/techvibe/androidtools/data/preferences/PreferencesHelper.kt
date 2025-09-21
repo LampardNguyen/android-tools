@@ -23,12 +23,14 @@ class PreferencesHelper @Inject constructor(
         private const val KEY_IS_VIBRATION_ENABLED = "is_vibration_enabled"
         private const val KEY_NOTIFICATION_VOLUME = "notification_volume"
         private const val KEY_REPEAT_INTERVAL_SECONDS = "repeat_interval_seconds"
+        private const val KEY_SOUND_REPEAT_COUNT = "sound_repeat_count"
         private const val KEY_IS_FIRST_TIME = "is_first_time"
         
         // Default values
         private const val DEFAULT_BATTERY_THRESHOLD = 80
         private const val DEFAULT_NOTIFICATION_VOLUME = 80
         private const val DEFAULT_REPEAT_INTERVAL = 30
+        private const val DEFAULT_SOUND_REPEAT_COUNT = 3
     }
     
     private val sharedPreferences: SharedPreferences = 
@@ -69,6 +71,11 @@ class PreferencesHelper @Inject constructor(
         get() = sharedPreferences.getInt(KEY_REPEAT_INTERVAL_SECONDS, DEFAULT_REPEAT_INTERVAL)
         set(value) = sharedPreferences.edit().putInt(KEY_REPEAT_INTERVAL_SECONDS, value).apply()
     
+    // Sound repeat count (1-10 times)
+    var soundRepeatCount: Int
+        get() = sharedPreferences.getInt(KEY_SOUND_REPEAT_COUNT, DEFAULT_SOUND_REPEAT_COUNT)
+        set(value) = sharedPreferences.edit().putInt(KEY_SOUND_REPEAT_COUNT, value.coerceIn(1, 10)).apply()
+    
     // First time app launch
     var isFirstTime: Boolean
         get() = sharedPreferences.getBoolean(KEY_IS_FIRST_TIME, true)
@@ -92,6 +99,7 @@ class PreferencesHelper @Inject constructor(
             putBoolean(KEY_IS_VIBRATION_ENABLED, true)
             putInt(KEY_NOTIFICATION_VOLUME, DEFAULT_NOTIFICATION_VOLUME)
             putInt(KEY_REPEAT_INTERVAL_SECONDS, DEFAULT_REPEAT_INTERVAL)
+            putInt(KEY_SOUND_REPEAT_COUNT, DEFAULT_SOUND_REPEAT_COUNT)
             putBoolean(KEY_IS_FIRST_TIME, false)
         }.apply()
     }
@@ -107,6 +115,7 @@ class PreferencesHelper @Inject constructor(
             "isVibrationEnabled" to isVibrationEnabled,
             "notificationVolume" to notificationVolume,
             "repeatIntervalSeconds" to repeatIntervalSeconds,
+            "soundRepeatCount" to soundRepeatCount,
             "isFirstTime" to isFirstTime
         )
     }
