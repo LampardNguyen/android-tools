@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#B7DBF6"
         tools:context=".presentation.ui.floatvolume.FloatVolumeSettingsActivity">
 
         <!-- Quickpay Style Gradient Header -->
@@ -31,8 +32,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <!-- Back Button -->
                 <ImageButton
@@ -40,22 +41,22 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/back_to_menu"
                     android:src="@drawable/ic_arrow_back"
-                    app:tint="@color/base_white"
-                    android:contentDescription="@string/back_to_menu" />
+                    app:tint="@color/base_white" />
 
                 <!-- App Title -->
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginHorizontal="12dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:text="@string/float_volume_settings_title"
                     android:textColor="@color/navigation_text"
                     android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:fontFamily="sans-serif-medium" />
+                    android:textStyle="bold" />
 
                 <!-- Spacer to balance back button -->
                 <View
@@ -69,12 +70,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:alpha="0.9"
+                android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="@string/float_volume_settings_subtitle"
                 android:textColor="@color/navigation_text"
-                android:textSize="14sp"
-                android:alpha="0.9"
-                android:fontFamily="sans-serif" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -84,8 +85,8 @@
             style="@style/Widget.AndroidTools.CardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:layout_marginHorizontal="16dp"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gradientHeader">
