@@ -24,13 +24,15 @@ Mỗi lần build release (prod) PHẢI tăng version trước, rồi mới buil
    - `versionCode` tăng thêm 1.
    - `versionName` tăng số cuối (patch): `1.0` → `1.0.1`, `1.0.1` → `1.0.2`, ...
 2. Trong `CHANGELOG.md`: đổi `## [Unreleased]` thành `## [<versionName mới>] - <YYYY-MM-DD>`, thêm lại mục `## [Unreleased]` trống ở trên.
-3. Build: `./gradlew assembleRelease`
-4. Kiểm tra chữ ký: `apksigner verify --print-certs app/build/outputs/apk/release/app-release.apk`
-5. Báo lại versionName/versionCode vừa build và đường dẫn APK.
-6. Hỏi người dùng có đăng GitHub Release không. Chỉ khi được đồng ý mới chạy:
+3. Commit thay đổi version + CHANGELOG (cùng code của bản này). Working tree phải sạch (trừ file `.idea`) trước khi build, để APK khớp đúng 1 commit.
+4. Build: `./gradlew assembleRelease`
+5. Kiểm tra chữ ký: `apksigner verify --print-certs app/build/outputs/apk/release/app-release.apk`
+6. Báo lại versionName/versionCode vừa build, commit hash và đường dẫn APK.
+7. Hỏi người dùng có đăng GitHub Release không. Chỉ khi được đồng ý mới chạy, theo đúng thứ tự (push TRƯỚC, rồi mới tạo release để tag trỏ đúng commit):
    ```bash
+   git push origin main
    cp app/build/outputs/apk/release/app-release.apk /tmp/androidtools-<versionName>.apk
-   gh release create v<versionName> /tmp/androidtools-<versionName>.apk -R LampardNguyen/android-tools --title "v<versionName>" --notes "<nội dung mục version đó trong CHANGELOG.md>"
+   gh release create v<versionName> /tmp/androidtools-<versionName>.apk -R LampardNguyen/android-tools --target $(git rev-parse HEAD) --title "v<versionName>" --notes "<nội dung mục version đó trong CHANGELOG.md>"
    ```
    App tự cập nhật đọc `releases/latest` nên bắt buộc: tag dạng `vX.Y.Z` (versionName phải đủ 3 số), có đúng 1 file `.apk` đính kèm, không đánh dấu pre-release/draft.
 
