@@ -140,4 +140,17 @@
     <string name="caffeine_notification_title">Caffeine đang bật</string>
     <string name="caffeine_notification_text">Màn hình sẽ luôn sáng cho tới khi khóa máy</string>
     <string name="caffeine_turn_off">Tắt</string>
+
+    <!-- App Update -->
+    <string name="update_check_button">Kiểm tra cập nhật · v%1$s</string>
+    <string name="update_checking">Đang kiểm tra cập nhật…</string>
+    <string name="update_latest">Bạn đang dùng bản mới nhất</string>
+    <string name="update_check_failed">Không kiểm tra được cập nhật</string>
+    <string name="update_available_title">Có bản mới v%1$s</string>
+    <string name="update_available_message">Phiên bản hiện tại: v%1$s</string>
+    <string name="update_now">Cập nhật</string>
+    <string name="update_later">Để sau</string>
+    <string name="update_downloading">Đang tải bản cập nhật…</string>
+    <string name="update_download_failed">Tải bản cập nhật thất bại</string>
+    <string name="update_install_permission">Hãy cho phép cài ứng dụng từ nguồn này, rồi bấm Cập nhật lại</string>
 </resources>

@@ -5,6 +5,12 @@ Mọi thay đổi đáng chú ý của dự án được ghi lại tại đây.
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-10-26
+
+### Added
+- Tự kiểm tra bản cập nhật từ GitHub Release khi mở app (tối đa 1 lần/giờ) và nút "Kiểm tra cập nhật" ở menu chính (kèm số version hiện tại).
+- Tải và cài bản mới ngay trong app (cần quyền cài ứng dụng không rõ nguồn).
+
 ## [1.0.1] - 2026-10-26
 
 ### Added

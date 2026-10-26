@@ -27,6 +27,12 @@ Mỗi lần build release (prod) PHẢI tăng version trước, rồi mới buil
 3. Build: `./gradlew assembleRelease`
 4. Kiểm tra chữ ký: `apksigner verify --print-certs app/build/outputs/apk/release/app-release.apk`
 5. Báo lại versionName/versionCode vừa build và đường dẫn APK.
+6. Hỏi người dùng có đăng GitHub Release không. Chỉ khi được đồng ý mới chạy:
+   ```bash
+   cp app/build/outputs/apk/release/app-release.apk /tmp/androidtools-<versionName>.apk
+   gh release create v<versionName> /tmp/androidtools-<versionName>.apk -R LampardNguyen/android-tools --title "v<versionName>" --notes "<nội dung mục version đó trong CHANGELOG.md>"
+   ```
+   App tự cập nhật đọc `releases/latest` nên bắt buộc: tag dạng `vX.Y.Z` (versionName phải đủ 3 số), có đúng 1 file `.apk` đính kèm, không đánh dấu pre-release/draft.
 
 Không tăng version khi build debug (`assembleDebug`).
 

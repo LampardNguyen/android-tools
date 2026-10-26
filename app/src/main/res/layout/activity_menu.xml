@@ -318,9 +318,18 @@
 
     </ScrollView>
 
-    <!-- Bottom Padding -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="32dp" />
+    <!-- Check for update (also shows current version) -->
+    <TextView
+        android:id="@+id/tvCheckUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:alpha="0.85"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp"
+        android:textColor="@color/base_white"
+        android:textSize="14sp"
+        tools:text="Kiểm tra cập nhật · v1.0.1" />
 
 </LinearLayout>
