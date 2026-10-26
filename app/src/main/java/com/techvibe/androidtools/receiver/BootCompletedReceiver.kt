@@ -6,9 +6,11 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.techvibe.androidtools.data.preferences.CaffeinePreferences
 import com.techvibe.androidtools.data.preferences.PreferencesHelper
 import com.techvibe.androidtools.service.BatteryMonitorService
 import com.techvibe.androidtools.utils.BatteryOptimizationHelper
+import com.techvibe.androidtools.utils.CaffeineManager
 import com.techvibe.androidtools.utils.Constants.ACTION_BATTERY_THRESHOLD_REACHED
 import com.techvibe.androidtools.utils.Constants.EXTRA_BATTERY_LEVEL
 import com.techvibe.androidtools.utils.Constants.EXTRA_IS_CHARGING
@@ -47,6 +49,11 @@ class BootCompletedReceiver : BroadcastReceiver() {
             
             // Initialize PreferencesHelper manually since this receiver is not managed by Hilt
             preferencesHelper = PreferencesHelper(context)
+            
+            // Caffeine never survives a reboot: restore the original screen timeout
+            if (CaffeinePreferences(context).isEnabled) {
+                CaffeineManager.disable(context)
+            }
             
             // Check if monitoring was enabled before boot/update
             if (preferencesHelper.isMonitoringEnabled) {

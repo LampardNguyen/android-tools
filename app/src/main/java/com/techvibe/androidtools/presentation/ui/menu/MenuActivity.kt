@@ -11,6 +11,7 @@ import com.techvibe.androidtools.R
 import com.techvibe.androidtools.databinding.ActivityMenuBinding
 import com.techvibe.androidtools.MainActivity
 import com.techvibe.androidtools.presentation.ui.floatvolume.FloatVolumeSettingsActivity
+import com.techvibe.androidtools.presentation.ui.caffeine.CaffeineSettingsActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -75,6 +76,12 @@ class MenuActivity : AppCompatActivity() {
         // Float Volume menu item click listener
         binding.cardFloatVolume.setOnClickListener {
             navigateToFloatVolumeSettings()
+        }
+        
+        // Caffeine menu item click listener
+        binding.cardCaffeine.setOnClickListener {
+            startActivity(Intent(this, CaffeineSettingsActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
     

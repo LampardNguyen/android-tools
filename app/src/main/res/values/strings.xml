@@ -122,4 +122,22 @@
     <!-- Sound Repeat -->
     <string name="sound_repeat_count">Số lần phát âm thanh</string>
     <string name="sound_repeat_count_hint">Số lần (1-10)</string>
+
+    <!-- Caffeine -->
+    <string name="menu_caffeine_title">caffeine</string>
+    <string name="menu_caffeine_description">Giữ màn hình luôn sáng</string>
+    <string name="caffeine_icon_description">Biểu tượng caffeine</string>
+    <string name="caffeine_settings_title">Caffeine</string>
+    <string name="caffeine_settings_subtitle">Giữ màn hình luôn sáng, tự tắt khi khóa máy</string>
+    <string name="caffeine_enable_title">Bật Caffeine</string>
+    <string name="caffeine_enable_description">Màn hình không tự tắt cho tới khi bạn tắt hoặc khóa máy</string>
+    <string name="caffeine_permission_message">Cần quyền \"Sửa đổi cài đặt hệ thống\" để thay đổi thời gian tắt màn hình</string>
+    <string name="caffeine_grant_permission">Cấp quyền</string>
+    <string name="caffeine_tile_hint">Thêm ô Caffeine vào Cài đặt nhanh để bật/tắt mà không cần mở ứng dụng</string>
+    <string name="caffeine_add_tile">Thêm vào Cài đặt nhanh</string>
+    <string name="caffeine_tile_label">Caffeine</string>
+    <string name="caffeine_channel_name">Caffeine</string>
+    <string name="caffeine_notification_title">Caffeine đang bật</string>
+    <string name="caffeine_notification_text">Màn hình sẽ luôn sáng cho tới khi khóa máy</string>
+    <string name="caffeine_turn_off">Tắt</string>
 </resources>

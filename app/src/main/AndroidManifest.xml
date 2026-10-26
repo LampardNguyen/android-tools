@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".BatteryAlertApplication"
@@ -54,6 +56,36 @@
             android:parentActivityName=".presentation.ui.menu.MenuActivity"
             android:theme="@style/Theme.AndroidTools" />
             
+        <!-- Caffeine Settings Activity -->
+        <activity
+            android:name=".presentation.ui.caffeine.CaffeineSettingsActivity"
+            android:exported="false"
+            android:label="@string/caffeine_settings_title"
+            android:parentActivityName=".presentation.ui.menu.MenuActivity"
+            android:theme="@style/Theme.AndroidTools" />
+
+        <!-- Caffeine Service: auto turn off when screen off -->
+        <service
+            android:name=".service.CaffeineService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Keep screen on until the device is locked" />
+        </service>
+
+        <!-- Caffeine Quick Settings Tile -->
+        <service
+            android:name=".service.CaffeineTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_coffee"
+            android:label="@string/caffeine_tile_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
         <!-- Battery Monitor Service -->
         <service
             android:name=".service.BatteryMonitorService"
